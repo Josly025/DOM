@@ -49,15 +49,25 @@
 const express = require("express");
 const app = express();
 
-//parameters
-//path, req, res, next
+//VIEW ENGINE -- Using EJS
+app.set("view engine", "ejs");
+
+//PARAMETERS
+//path, (req, res, next)
 app.get("/", (req, res) => {
   console.log("root");
-  res.json({ message: "Error" });
-  res.send("hi");
-  res.render("./views/big.html");
+  // res.json({ message: "Error" });
+  // res.send("hi");
+  //second parameter with object if you want to pass data down to the EJS page
+  res.render("index", {
+    text: "world",
+  });
   // res.download("server.js");
 });
 
+//importing the USer routes and using app use
+const userRouter = require("./routes/users");
+
+app.use("/users", userRouter);
 //listening on port 3000
 app.listen(3000);
